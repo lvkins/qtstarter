@@ -1,0 +1,36 @@
+#define MAIN_DIR "bin/"
+
+#define ADMIN_MAIL ""
+
+#define _SERVER_URL "example.com"
+#define _SERVER_NAME "Example"
+
+#define _TMP_DOWNLOAD_PATH "%TEMP%/Example"
+
+#define CLIENT_NAME "example.exe"
+
+///
+
+#include <iostream>
+
+#include <QDir>
+#include <QFile>
+#include <QString>
+#include <QMessageBox>
+#include <QNetworkReply>
+#include <QDebug>
+
+#include "utils.h"
+
+#define SERVER_URL QStringLiteral(_SERVER_URL)
+#define SERVER_NAME QStringLiteral(_SERVER_NAME)
+#define SET_PATH(PATH) QString(QString(MAIN_DIR) + PATH)
+#define TMP_DOWNLOAD_PATH QString(MAIN_DIR) + QString(_TMP_DOWNLOAD_PATH)
+
+#define QERROR(STR) \
+	QMessageBox::critical(nullptr, "Błąd", QString(STR)); \
+	exit(-1);
+
+#define FATAL(STR) \
+	QMessageBox::critical(nullptr, "Błąd", QString("%1\n\nTry again or report logs located in the: %2 directly to the administrator at: %3\n%4\nDebug data:\nCWD: %5\nElevated: %6").arg(STR, SET_PATH("patcher/starter.log"), QString(ADMIN_MAIL), QString("-").repeated(59), QDir::currentPath(), QString::number(isElevated()))); \
+		exit(-1);
